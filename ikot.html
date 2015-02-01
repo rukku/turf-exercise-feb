@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Buildings along the Ikot Route</title>
+
+<link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' />
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-label/v0.2.1/leaflet.label.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-label/v0.2.1/leaflet.label.css' rel='stylesheet' />
+
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+  .small-input { width: 80px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v1.3.0/turf.min.js'></script>
+<div id='map'></div>
+<div class='pin-top fill-gray pad1'>
+   UP Buildings near the Ikot route
+    <input type='number' id='radius' max='4000' min='0' class='clean short small-input' value='500' step='10' /> feet
+    of UP Ikot route.
+    <p class='small'>A GeoJSON route is buffered with <a target='_blank' href='https://github.com/Turfjs/turf-buffer'>turf-buffer</a>
+    and points are found with <a href='https://github.com/Turfjs/turf-within'>turf-within</a>.</p>
+</div>
+<script src='site.js'></script>
+</body>
+</html>
