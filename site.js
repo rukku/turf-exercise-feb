@@ -49,7 +49,7 @@ function done() {
         buildingCentroidsInside
             .setGeoJSON(buildingsInside)
             .eachLayer(function(layer) {
-                layer.bindLabel(layer.feature.properties.name + 'is accessible from Ikot route');
+                layer.bindLabel(layer.feature.properties.name + ' is accessible from Ikot route');
             });
     }
 
