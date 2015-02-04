@@ -3,33 +3,33 @@ map.scrollWheelZoom.disable();
 
 var bufferLayer = L.mapbox.featureLayer().addTo(map);
 
-var raceRoute = L.mapbox.featureLayer().addTo(map);
-var schoolFountains = L.mapbox.featureLayer().addTo(map);
-var schoolFountainsInside = L.mapbox.featureLayer().addTo(map);
+var ikotRoute = L.mapbox.featureLayer().addTo(map);
+var buildingCentroids = L.mapbox.featureLayer().addTo(map);
+var buildingCentroidsInside = L.mapbox.featureLayer().addTo(map);
 
-schoolFountains.loadURL('./buildingCentroids.geojson')
+buildingCentroids.loadURL('./buildingCentroids.geojson')
     .on('ready', done);
 
-raceRoute.loadURL('./ikot.geojson')
+ikotRoute.loadURL('./ikot.geojson')
     .on('ready', done);
 
 var loaded = 0;
 function done() {
     if (++loaded !== 2) return;
-    raceRoute.setStyle({ color: 'hotpink', weight: 3 });
-    map.fitBounds(raceRoute.getBounds());
+    ikotRoute.setStyle({ color: 'yellow', weight: 3 });
+    map.fitBounds(ikotRoute.getBounds());
 
     function run() {
         var radius = parseInt(document.getElementById('radius').value);
         if (isNaN(radius)) radius = 100;
-        var buffer = turf.buffer(raceRoute.getGeoJSON(), radius/5280, 'miles');
-        var fountains = schoolFountains.getGeoJSON();
-        fountains.features.forEach(function(feature) {
+        var buffer = turf.buffer(ikotRoute.getGeoJSON(), radius/5280, 'miles');
+        var buildings = buildingCentroids.getGeoJSON();
+        buildings.features.forEach(function(feature) {
             feature.properties['marker-color'] = '#111';
             feature.properties['marker-symbol'] = 'building';
             feature.properties['marker-size'] = 'small';
         });
-        schoolFountains.setGeoJSON(fountains);
+        buildingCentroids.setGeoJSON(buildings);
         bufferLayer
             .setGeoJSON(buffer)
             .setStyle({
@@ -40,16 +40,16 @@ function done() {
             .eachLayer(function(layer) {
                 layer.bindLabel('Ikot Route', { noHide: true });
             });
-        var fountainsInside = turf.within(schoolFountains.getGeoJSON(), buffer);
-        fountainsInside.features.forEach(function(feature) {
+        var buildingsInside = turf.within(buildingCentroids.getGeoJSON(), buffer);
+        buildingsInside.features.forEach(function(feature) {
             feature.properties['marker-color'] = '#00f';
             feature.properties['marker-symbol'] = 'building';
             feature.properties['marker-size'] = 'large';
         });
-        schoolFountainsInside
-            .setGeoJSON(fountainsInside)
+        buildingCentroidsInside
+            .setGeoJSON(buildingsInside)
             .eachLayer(function(layer) {
-                layer.bindLabel('Accessible school fountain');
+                layer.bindLabel('Building accessible from Ikot route');
             });
     }
 
