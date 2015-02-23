@@ -52,7 +52,7 @@ function done() {
             .setGeoJSON(buildingsInside)
             .eachLayer(function(layer) {
                 //layer.bindLabel( feature.properties.name + 'Building is accessible from Ikot route');
-                layer.bindLabel( layer.feature.properties.name + ' building is accessible from Ikot route');
+                layer.bindPopup( layer.feature.properties.name + ' building is accessible from Ikot route');
 
             });
     }
