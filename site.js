@@ -30,7 +30,6 @@ function done() {
             feature.properties['marker-size'] = 'small';
 			feature.properties['marker-opacity'] = 0.1;
         });
-		
         buildingCentroids.setGeoJSON(buildings);
         bufferLayer
             .setGeoJSON(buffer)
