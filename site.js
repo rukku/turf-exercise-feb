@@ -21,14 +21,16 @@ function done() {
 
     function run() {
         var radius = parseInt(document.getElementById('radius').value);
-        if (isNaN(radius)) radius = 100;
-        var buffer = turf.buffer(ikotRoute.getGeoJSON(), radius/5280, 'miles');
+        if (isNaN(radius)) radius = 50;
+        var buffer = turf.buffer(ikotRoute.getGeoJSON(), radius/1000, 'kilometers');
         var buildings = buildingCentroids.getGeoJSON();
         buildings.features.forEach(function(feature) {
             feature.properties['marker-color'] = '#111';
-            feature.properties['marker-symbol'] = 'building';
+            feature.properties['marker-symbol'] = '';
             feature.properties['marker-size'] = 'small';
+			feature.properties['marker-opacity'] = 0.1;
         });
+		
         buildingCentroids.setGeoJSON(buildings);
         bufferLayer
             .setGeoJSON(buffer)
@@ -46,10 +48,12 @@ function done() {
             feature.properties['marker-symbol'] = 'building';
             feature.properties['marker-size'] = 'large';
         });
+
         buildingCentroidsInside
             .setGeoJSON(buildingsInside)
             .eachLayer(function(layer) {
-                layer.bindLabel('Building accessible from Ikot route');
+                //layer.bindLabel( feature.properties.name + 'Building is accessible from Ikot route');
+                layer.bindLabel( layer.feature.properties.name + ' building is accessible from Ikot route');
             });
     }
 
