@@ -53,6 +53,7 @@ function done() {
             .eachLayer(function(layer) {
                 //layer.bindLabel( feature.properties.name + 'Building is accessible from Ikot route');
                 layer.bindLabel( layer.feature.properties.name + ' building is accessible from Ikot route');
+
             });
     }
 
